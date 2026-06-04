@@ -1,0 +1,23 @@
+############# Block 3: SQL
+
+### Задание 1
+SELECT
+    id,
+    scores,
+    RANK() OVER (ORDER BY scores DESC) AS position
+FROM examination
+ORDER BY scores DESC;
+
+### Задание 2
+Минимально 30 строк, максимально 50 строк
+
+### Задание 3
+SELECT
+    account.client_id
+FROM account
+LEFT JOIN transaction
+ON account.id = transaction.account_id
+  AND transaction.type = 'buy'        -- Непонятно как именно называется тип покупки, но допустим buy
+  AND transaction.transaction_date <= CURRENT_DATE - INTERVAL '1 month'
+GROUP BY account.client_id
+HAVING COALESCE(SUM(transaction.amount), 0) < 5000;
